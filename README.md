@@ -255,6 +255,4 @@ This project is created for educational purposes as part of CS 414 Full Stack We
 
 **Course**: CS 414 Full Stack Web Development  
 **Week**: 6 - Data and Model Management with MongoDB  
-**Student**: [Your Name]  
-**Date**: [Current Date]  
-**Repository**: [GitHub URL]
+
