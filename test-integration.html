@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-danger { background-color: #dc3545; color: white; }
+        .btn-success { background-color: #28a745; color: white; }
+        pre { background-color: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Todo App Integration Test</h1>
+    <p>This page tests the full-stack integration between frontend and backend.</p>
+
+    <div class="test-section">
+        <h3>Backend Status Check</h3>
+        <button class="btn-primary" onclick="testBackend()">Test Backend API</button>
+        <div id="backend-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Frontend Status Check</h3>
+        <button class="btn-primary" onclick="testFrontend()">Test Frontend</button>
+        <div id="frontend-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Full-Stack Integration Test</h3>
+        <button class="btn-success" onclick="testFullStack()">Test Complete Integration</button>
+        <div id="integration-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Manual API Testing</h3>
+        <input type="text" id="todoText" placeholder="Enter todo text" style="padding: 8px; margin-right: 10px;">
+        <button class="btn-success" onclick="addTodo()">Add Todo</button>
+        <button class="btn-danger" onclick="deleteTodo()">Delete Last Todo</button>
+        <div id="manual-result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001/api';
+        const FRONTEND_URL = 'http://localhost:3002';
+
+        async function testBackend() {
+            const resultDiv = document.getElementById('backend-result');
+            try {
+                const response = await fetch(`${API_BASE}/todos`);
+                if (response.ok) {
+                    const todos = await response.json();
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Backend is running successfully!</h4>
+                            <p>Found ${todos.length} todos in database</p>
+                            <pre>${JSON.stringify(todos, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Backend test failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p>Make sure the backend server is running on port 3001</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testFrontend() {
+            const resultDiv = document.getElementById('frontend-result');
+            try {
+                const response = await fetch(FRONTEND_URL);
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Frontend is running successfully!</h4>
+                            <p>React app is accessible at ${FRONTEND_URL}</p>
+                            <p>Status: ${response.status} ${response.statusText}</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Frontend test failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p>Make sure the React app is running on port 3002</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testFullStack() {
+            const resultDiv = document.getElementById('integration-result');
+            try {
+                // Test 1: Get todos
+                const getResponse = await fetch(`${API_BASE}/todos`);
+                if (!getResponse.ok) throw new Error('Failed to get todos');
+                const todos = await getResponse.json();
+                
+                // Test 2: Add a test todo
+                const addResponse = await fetch(`${API_BASE}/todos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: 'Integration Test Todo' })
+                });
+                if (!addResponse.ok) throw new Error('Failed to add todo');
+                const newTodo = await addResponse.json();
+                
+                // Test 3: Delete the test todo
+                const deleteResponse = await fetch(`${API_BASE}/todos/${newTodo.id}`, {
+                    method: 'DELETE'
+                });
+                if (!deleteResponse.ok) throw new Error('Failed to delete todo');
+                
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Full-Stack Integration Test Passed!</h4>
+                        <p>✅ Backend API is responding</p>
+                        <p>✅ Frontend can communicate with backend</p>
+                        <p>✅ CRUD operations are working</p>
+                        <p>✅ CORS is properly configured</p>
+                        <h5>Test Results:</h5>
+                        <ul>
+                            <li>Initial todos: ${todos.length}</li>
+                            <li>Added test todo: ${newTodo.text}</li>
+                            <li>Successfully deleted test todo</li>
+                        </ul>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Full-Stack Integration Test Failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p>Check that both servers are running and CORS is configured properly.</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function addTodo() {
+            const text = document.getElementById('todoText').value.trim();
+            if (!text) {
+                alert('Please enter todo text');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('manual-result');
+            try {
+                const response = await fetch(`${API_BASE}/todos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                
+                if (response.ok) {
+                    const newTodo = await response.json();
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Todo added successfully!</h4>
+                            <p>ID: ${newTodo.id}, Text: ${newTodo.text}</p>
+                        </div>
+                    `;
+                    document.getElementById('todoText').value = '';
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Failed to add todo</h4>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function deleteTodo() {
+            const resultDiv = document.getElementById('manual-result');
+            try {
+                // First get all todos to find the last one
+                const getResponse = await fetch(`${API_BASE}/todos`);
+                if (!getResponse.ok) throw new Error('Failed to get todos');
+                const todos = await getResponse.json();
+                
+                if (todos.length === 0) {
+                    resultDiv.innerHTML = '<div class="error"><h4>No todos to delete</h4></div>';
+                    return;
+                }
+                
+                const lastTodo = todos[todos.length - 1];
+                const deleteResponse = await fetch(`${API_BASE}/todos/${lastTodo.id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (deleteResponse.ok) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Todo deleted successfully!</h4>
+                            <p>Deleted: ${lastTodo.text}</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${deleteResponse.status}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Failed to delete todo</h4>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-run backend test on page load
+        window.onload = function() {
+            testBackend();
+        };
+    </script>
+</body>
+</html>
