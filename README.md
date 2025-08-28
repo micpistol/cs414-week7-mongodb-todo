@@ -1,20 +1,20 @@
-# 🚀 Enhanced Full Stack Todo Application - CS 414
+Full-Stack Todo List with MongoDB
 
 ## Assignment Overview
 **Week 6: Data and Model Management with MongoDB Integration**
 
 This project demonstrates a **production-ready full-stack web application** with a React frontend, Express.js backend, and MongoDB database. The application includes comprehensive security features, error handling, and modern development practices.
 
-## 🎯 Enhanced Features
 
-### ✅ **Core Assignment Requirements Met**
+
+Core Assignment Requirements Met**
 - **View existing tasks** - Display all todos from MongoDB database
 - **Add new task** - Create new todos with validation and persistence
 - **Delete task** - Remove todos with proper error handling
 - **Full-stack architecture** - React frontend + Express backend + MongoDB
 - **RESTful API** - Proper HTTP methods, status codes, and validation
 
-### 🚀 **Advanced Features Added**
+**Advanced Features Added**
 - **MongoDB Integration** - Persistent data storage with Mongoose ODM
 - **Completion Status** - Toggle todo completion with visual feedback
 - **Inline Editing** - Edit todos directly in the list
@@ -23,7 +23,7 @@ This project demonstrates a **production-ready full-stack web application** with
 - **Real-time Statistics** - Visual progress tracking and completion rates
 - **Responsive Design** - Mobile-first approach with modern UI/UX
 
-### 🔒 **Security Features Implemented**
+Security Features Implemented**
 - **Environment Variables** - Secure configuration management with dotenv
 - **Input Validation** - Server-side validation with Mongoose schemas
 - **CORS Configuration** - Secure cross-origin resource sharing
@@ -31,7 +31,7 @@ This project demonstrates a **production-ready full-stack web application** with
 - **Error Handling** - Comprehensive error management without information leakage
 - **Dependency Audits** - Regular security vulnerability checks
 
-## 🏗️ Project Structure
+Project Structure
 ```
 project/
 ├── backend/                 # Express.js server with MongoDB
@@ -55,7 +55,7 @@ project/
 └── README.md               # This file
 ```
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Backend
 - **Node.js** - JavaScript runtime environment
@@ -71,7 +71,7 @@ project/
 - **Fetch API** - HTTP communication with backend
 - **Component Architecture** - Modular, maintainable code
 
-## 📋 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Node.js (version 14 or higher)
@@ -139,7 +139,7 @@ project/
 - **Status Filter**: `?completed=true` or `?completed=false`
 - **Search**: `?search=keyword`
 
-## 🔒 Security Implementation
+#Security Implementation
 
 ### Environment Variables
 ```bash
@@ -157,7 +157,7 @@ CORS_ORIGIN=http://localhost:3002
 - **Error Handling** - Secure error responses without information leakage
 - **Dependency Audits** - Regular security vulnerability checks
 
-## 🧪 Testing
+## Testing
 
 ### Integration Testing
 Open `test-integration.html` in your browser to test:
@@ -186,7 +186,7 @@ Open `test-integration.html` in your browser to test:
 - **Responsive Design** - Works seamlessly on all devices
 - **Error Handling** - User-friendly error messages
 
-## 🚀 Production Deployment
+## Production Deployment
 
 ### Environment Configuration
 - Set `NODE_ENV=production`
@@ -222,7 +222,7 @@ npm test           # Run tests
 - **Component Architecture** - Modular, reusable components
 - **Error Boundaries** - Graceful error handling
 
-## 📚 Learning Outcomes
+## Learning Outcomes
 
 This project demonstrates:
 - **Full-Stack Development** - Complete application architecture
@@ -232,24 +232,6 @@ This project demonstrates:
 - **API Design** - RESTful API with proper error handling
 - **User Experience** - Responsive design and intuitive interfaces
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is created for educational purposes as part of CS 414 Full Stack Web Development course.
-
-## 🙏 Acknowledgments
-
-- **UCLA Extension** - Course materials and guidance
-- **MongoDB** - Database technology and documentation
-- **Express.js** - Web framework
-- **React** - Frontend library
 
 ---
 
