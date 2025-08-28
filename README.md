@@ -1,7 +1,7 @@
 Full-Stack Todo List with MongoDB
 
 ## Assignment Overview
-**Week 6: Data and Model Management with MongoDB Integration**
+**Pre-final project combo assignment: Data and Model Management with MongoDB Integration**
 
 This project demonstrates a **production-ready full-stack web application** with a React frontend, Express.js backend, and MongoDB database. The application includes comprehensive security features, error handling, and modern development practices.
 
